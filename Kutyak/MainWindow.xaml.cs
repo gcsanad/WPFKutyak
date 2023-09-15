@@ -22,9 +22,9 @@ namespace Kutyak
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<KutyakOsztaly> kutyaNevek = File.ReadAllLines("KutyaNevek.csv").Skip(1).Select(x => new KutyakOsztaly(x, false)).ToList();
-        private List<KutyakOsztaly> kutyak = File.ReadAllLines("Kutyak.csv").Skip(1).Select(x => new KutyakOsztaly(x)).ToList();
-        private List<KutyakOsztaly> kutyaFajtak = File.ReadAllLines("KutyaFajtak.csv").Skip(1).Select(x => new KutyakOsztaly(x, true)).ToList();
+        private List<KutyakOsztaly> kutyaNevek = File.ReadAllLines("Adatok\\KutyaNevek.csv").Skip(1).Select(x => new KutyakOsztaly(x, false)).ToList();
+        private List<KutyakOsztaly> kutyak = File.ReadAllLines("Adatok\\Kutyak.csv").Skip(1).Select(x => new KutyakOsztaly(x)).ToList();
+        private List<KutyakOsztaly> kutyaFajtak = File.ReadAllLines("Adatok\\KutyaFajtak.csv").Skip(1).Select(x => new KutyakOsztaly(x, true)).ToList();
         KutyakOsztaly kezelo = new KutyakOsztaly();
         public MainWindow()
         {

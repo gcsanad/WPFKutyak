@@ -16,12 +16,12 @@ namespace Kutyak
 
         public KutyakOsztaly()
         {
-            foreach (var sor in File.ReadAllLines("KutyaNevek.csv").Skip(1))
+            foreach (var sor in File.ReadAllLines("Adatok\\KutyaNevek.csv").Skip(1))
             {
                 string[] felosztas = sor.Split(';');
                 kutyaNevekDict.Add(int.Parse(felosztas[0]), felosztas[1]);
             }
-            foreach (var sor in File.ReadAllLines("KutyaFajtak.csv").Skip(1))
+            foreach (var sor in File.ReadAllLines("Adatok\\KutyaFajtak.csv").Skip(1))
             {
                 string[] felosztas = sor.Split(';');
                 List<string> fajtaNevek = new List<string>();
@@ -30,7 +30,7 @@ namespace Kutyak
                 kutyaFajtakDict.Add(int.Parse(felosztas[0]), fajtaNevek);
             }
 
-            List<string> sorok = File.ReadAllLines("Kutyak.csv", encoding: Encoding.UTF8).Skip(1).ToList();
+            List<string> sorok = File.ReadAllLines("Adatok\\Kutyak.csv", encoding: Encoding.UTF8).Skip(1).ToList();
             foreach (var sor in sorok)
             {
                 string[] felosztas = sor.Split(';');
