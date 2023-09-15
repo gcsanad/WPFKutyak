@@ -25,6 +25,7 @@ namespace Kutyak
         private List<KutyakOsztaly> kutyaNevek = File.ReadAllLines("KutyaNevek.csv").Skip(1).Select(x => new KutyakOsztaly(x, false)).ToList();
         private List<KutyakOsztaly> kutyak = File.ReadAllLines("Kutyak.csv").Skip(1).Select(x => new KutyakOsztaly(x)).ToList();
         private List<KutyakOsztaly> kutyaFajtak = File.ReadAllLines("KutyaFajtak.csv").Skip(1).Select(x => new KutyakOsztaly(x, true)).ToList();
+        KutyakOsztaly kezelo = new KutyakOsztaly();
         public MainWindow()
         {
             InitializeComponent();
@@ -39,11 +40,30 @@ namespace Kutyak
             string nev = kutyaNevek.Where(x => x.Id == id).ToList()[0].KutyaNev;
             string fajta = kutyaFajtak.Where(x => x.Id == eletkorId).ToList()[0].Nev;
             lblLegidosebbKutya.Content = $"{nev}, {fajta}";
+            
+            KutyakOsztaly legidosebb = kutyak.Where(x => x.Eletkor == kutyak.Max(x => x.Eletkor)).First();
+
+            //9.Feladat
+            IGrouping<DateTime, KutyakOsztaly> orvosnalKutyak = kutyak.GroupBy(x => x.UtolsoOrvosiVizsgalat).OrderByDescending(x => x.Count()).First();
+            lblLegleterheltebbNap.Content = orvosnalKutyak.Key.ToShortDateString();
+            lblLegtobbKutya.Content = $"{orvosnalKutyak.Count()} kutya";
         }
+
 
         private void btnKiiratas_Click(object sender, RoutedEventArgs e)
         {
-            lbKutyaRendeloben.ItemsSource = kutyak.Where(x => Convert.ToString(x.UtolsoOrvosiVizsgalat) == dpDatumValaszto.Text).GroupBy(x => x.KutyaNev).Select(x => $"{x.Key} : {x.Count()}");
+
+            DateTime idopont = (DateTime)dpDatumValaszto.SelectedDate;
+            
+            try
+            {
+                lbKutyaRendeloben.ItemsSource =kezelo.KutyaBeolvasas.Where(x => x.UtolsoOrvosiVizsgalat == dpDatumValaszto.Text).GroupBy(x => x.FajtaId).Select(x => x);
+            }
+            catch
+            {
+
+                MessageBox.Show("Ebben az időpontban nincs feljegyezve kutya");
+            }
             
             /*
             if (lbKutyaRendeloben.Items.Count == 0)
